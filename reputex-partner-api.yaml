@@ -1,0 +1,955 @@
+openapi: 3.0.0
+info:
+  title: ReputeX For Partners
+  version: 1.0.0
+servers:
+  - url: https://api.reputex.io/v1
+  - url: https://dev.reputex.io/v1
+components:
+  responses:
+    UnauthorizedError:
+      description: API key is missing or invalid
+      headers:
+        WWW_Authenticate:
+          schema:
+            type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    ApiSecretAuth:
+      type: apiKey
+      in: header
+      name: x-api-secret
+security:
+  - ApiKeyAuth: []
+    ApiSecretAuth: []
+tags:
+  - name: Manage API Key
+  - name: Whitelist Cors
+  - name: Weightage
+paths:
+  /auth/client-api-key/refresh-key:
+    post:
+      tags:
+        - Manage API Key
+      summary: Initiate the refreshing of the Client API Secret Key.
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example: 
+                success: true
+                data: object
+                message: "OTP has been sent successfully to your email id."
+                error: ""
+        '429':
+            description: Too Many Requests
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                    message:
+                      type: string
+                    error:
+                      type: string
+                example:
+                  success: false
+                  data: object
+                  message: "Max otp limit reached. Please try after one hour."
+                  error: ""
+
+  /auth/client-api-key/verify-otp:
+    post:
+      tags:
+        - Manage API Key
+      summary: Verify OTP and receive updated Client Secret Key.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  otp: 
+                    type: string
+              example:
+                otp: '582410'
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      secretKey:
+                        type: string
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: true
+                data:
+                  secretKey: "700fbe8884b8ab57544d54855de778fdc946389bf0e9e388a8ad5f85324a294f"
+                message: "Please save your new secret key."
+                error: ""
+        '410':
+          description: Error response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: false
+                data: object
+                message: "Invalid OTP."
+                error: ""
+  
+  /auth/client-api-key/change-key-name:
+    put:
+      tags:
+        - Manage API Key
+      summary: Update Client Api Key Name.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                keyName:
+                  type: string
+              example:
+                keyName: test key name
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      clientSecretId:
+                        type: string
+                      name:
+                        type: string
+                      accessKey:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: true
+                data:
+                  clientSecretId: "04e1099a-c02a-4cb4-b69e-9568ac897883"
+                  name: "key name update"
+                  accessKey: "2373f4f1-7935-41bb-8867-b74af3b76a86"
+                  createdAt: "2023-05-22T03:21:24.989Z"
+                  updatedAt: "2023-05-23T16:10:38.178Z"
+                message: "Updated successfully."
+                error: ""
+  
+  
+  /score/weightage/update:
+    post:
+      tags:
+        - Weightage
+      summary: Weightage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ETH:
+                  type: object
+                  properties:
+                    UD_MODULE:
+                      type: number
+                    ENS_MODULE:
+                      type: number
+                    NFT_MODULE:
+                      type: number
+                    APPS_MODULE:
+                      type: number
+                    META_MODULE:
+                      type: number
+                    DEFI_TVL_MODULE:
+                      type: number
+                    DEFI_AAVE_MODULE:
+                      type: number
+                    DEFI_LIDO_MODULE:
+                      type: number
+                    DEFI_CURVE_MODULE:
+                      type: number
+                    DEFI_EULER_MODULE:
+                      type: number
+                    DEFI_YEARN_MODULE:
+                      type: number
+                    TX_HISTORY_MODULE:
+                      type: number
+                    DEFI_ENZYME_MODULE:
+                      type: number
+                    UNISWAP_DAO_MODULE:
+                      type: number
+                    DEFI_UNISWAP_MODULE:
+                      type: number
+                    DEFI_COMPOUND_MODULE:
+                      type: number
+                    DEFI_PROTOCOL_MODULE:
+                      type: number
+                    POOL_TOGETHER_MODULE:
+                      type: number
+                    DEFI_CATEGORY_WEIGHTAGE:
+                      type: number
+                    META_CATEGORY_WEIGHTAGE:
+                      type: number
+                    OVERALL_SCORE_WEIGHTAGE:
+                      type: number
+                    NFT_TRANSACTION_WEIGHTAGE:
+                      type: number
+                    CREDIBILITY_CATEGORY_WEIGHTAGE:
+                      type: number
+                    SOCIAL_IMPACT_CATEGORY_WEIGHTAGE:
+                      type: number
+                POLYGON:
+                  type: object
+                  properties:
+                    UD_MODULE:
+                      type: number
+                    NFT_MODULE:
+                      type: number
+                    APPS_MODULE:
+                      type: number
+                    DEFI_TVL_MODULE:
+                      type: number
+                    TX_HISTORY_MODULE:
+                      type: number
+                    DEFI_PROTOCOL_MODULE:
+                      type: number
+                    POOL_TOGETHER_MODULE:
+                      type: number
+                    DEFI_CATEGORY_WEIGHTAGE:
+                      type: number
+                    META_CATEGORY_WEIGHTAGE:
+                      type: number
+                    OVERALL_SCORE_WEIGHTAGE:
+                      type: number
+                    CREDIBILITY_CATEGORY_WEIGHTAGE:
+                      type: number
+                AVAX:
+                  type: object
+                  properties:
+                    NFT_MODULE:
+                      type: number
+                    APPS_MODULE:
+                      type: number
+                    DEFI_TVL_MODULE:
+                      type: number
+                    TX_HISTORY_MODULE:
+                      type: number
+                    DEFI_PROTOCOL_MODULE:
+                      type: number
+                    POOL_TOGETHER_MODULE:
+                      type: number
+                    DEFI_CATEGORY_WEIGHTAGE:
+                      type: number
+                    META_CATEGORY_WEIGHTAGE:
+                      type: number
+                    OVERALL_SCORE_WEIGHTAGE:
+                      type: number
+                    CREDIBILITY_CATEGORY_WEIGHTAGE:
+                      type: number
+                BSC:
+                  type: object
+                  properties:
+                    NFT_MODULE:
+                      type: number
+                    APPS_MODULE:
+                      type: number
+                    DEFI_TVL_MODULE:
+                      type: number
+                    TX_HISTORY_MODULE:
+                      type: number
+                    DEFI_PROTOCOL_MODULE:
+                      type: number
+                    DEFI_CATEGORY_WEIGHTAGE:
+                      type: number
+                    META_CATEGORY_WEIGHTAGE:
+                      type: number
+                    OVERALL_SCORE_WEIGHTAGE:
+                      type: number
+                    CREDIBILITY_CATEGORY_WEIGHTAGE:
+                      type: number
+                ARBITRUM:
+                  type: object
+                  properties:
+                    NFT_MODULE:
+                      type: number
+                    APPS_MODULE:
+                      type: number
+                    DEFI_TVL_MODULE:
+                      type: number
+                    DEFI_AAVE_MODULE:
+                      type: number
+                    DEFI_SILO_MODULE:
+                      type: number
+                    DEFI_YEARN_MODULE:
+                      type: number
+                    TX_HISTORY_MODULE:
+                      type: number
+                    DEFI_QI_DAO_MODULE:
+                      type: number
+                    DEFI_UNISWAP_MODULE:
+                      type: number
+                    DEFI_PROTOCOL_MODULE:
+                      type: number
+                    DEFI_ABRACADABRA_MODULE:
+                      type: number
+                    DEFI_CATEGORY_WEIGHTAGE:
+                      type: number
+                    META_CATEGORY_WEIGHTAGE:
+                      type: number
+                    OVERALL_SCORE_WEIGHTAGE:
+                      type: number
+                    CREDIBILITY_CATEGORY_WEIGHTAGE:
+                      type: number
+              example:
+                ETH:
+                  UD_MODULE: 0.5
+                  ENS_MODULE: 0.5
+                  NFT_MODULE: 1
+                  APPS_MODULE: 0.5
+                  META_MODULE: 0.5
+                  TX_HISTORY_MODULE: 1
+                  DEFI_PROTOCOL_MODULE: 1
+                  DEFI_CATEGORY_WEIGHTAGE: 1
+                  META_CATEGORY_WEIGHTAGE: 0.2
+                  CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                  NFT_TRANSACTION_WEIGHTAGE: 0.25
+                  DEFI_AAVE_MODULE: 1
+                  DEFI_COMPOUND_MODULE: 0.3
+                  DEFI_CURVE_MODULE: 0.5
+                  DEFI_EULER_MODULE: 0.2
+                  DEFI_ENZYME_MODULE: 1
+                  DEFI_LIDO_MODULE: 0.3
+                  DEFI_TVL_MODULE: 0.5
+                  DEFI_UNISWAP_MODULE: 0.2
+                  DEFI_YEARN_MODULE: 0.2
+                  POOL_TOGETHER_MODULE: 0.1
+                  SOCIAL_IMPACT_CATEGORY_WEIGHTAGE: 0.5
+                  UNISWAP_DAO_MODULE: 1.0
+                  OVERALL_SCORE_WEIGHTAGE: 0.55
+                POLYGON:
+                  UD_MODULE: 0.5
+                  NFT_MODULE: 1
+                  APPS_MODULE: 0.5
+                  DEFI_TVL_MODULE: 1
+                  TX_HISTORY_MODULE: 1
+                  DEFI_PROTOCOL_MODULE: 1
+                  DEFI_CATEGORY_WEIGHTAGE: 1
+                  META_CATEGORY_WEIGHTAGE: 0.2
+                  OVERALL_SCORE_WEIGHTAGE: 0.15
+                  CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                  POOL_TOGETHER_MODULE: 0.1
+                AVAX:
+                  NFT_MODULE: 1
+                  APPS_MODULE: 0.5
+                  DEFI_TVL_MODULE: 1
+                  TX_HISTORY_MODULE: 1
+                  DEFI_PROTOCOL_MODULE: 1
+                  DEFI_CATEGORY_WEIGHTAGE: 1
+                  META_CATEGORY_WEIGHTAGE: 0.2
+                  OVERALL_SCORE_WEIGHTAGE: 0.05
+                  CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                  POOL_TOGETHER_MODULE: 0.1
+                BSC:
+                  NFT_MODULE: 1
+                  APPS_MODULE: 0.5
+                  DEFI_TVL_MODULE: 1
+                  TX_HISTORY_MODULE: 1
+                  DEFI_PROTOCOL_MODULE: 1
+                  DEFI_CATEGORY_WEIGHTAGE: 1
+                  META_CATEGORY_WEIGHTAGE: 0.2
+                  OVERALL_SCORE_WEIGHTAGE: 0.25
+                  CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                ARBITRUM:
+                OVERALL_SCORE_WEIGHTAGE: 0.05
+                NFT_MODULE: 1.0
+                TX_HISTORY_MODULE: 1.0
+                APPS_MODULE: 0.5
+                DEFI_PROTOCOL_MODULE: 1.0
+                DEFI_AAVE_MODULE: 1.0
+                DEFI_ABRACADABRA_MODULE: 1.0
+                DEFI_UNISWAP_MODULE: 1.0
+                DEFI_YEARN_MODULE: 1.0
+                DEFI_QI_DAO_MODULE: 1.0
+                DEFI_SILO_MODULE: 1.0
+                DEFI_TVL_MODULE: 1.0
+                CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+        
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: "Indicates if the request was successful"
+                  data:
+                    type: object
+                    properties:
+                      weightageId:
+                        type: string
+                        description: "The ID of the weightage"
+                  message:
+                    type: string
+                    description: "Success message"
+                  error:
+                    type: string
+                    description: "Error message, if any"
+              example:
+                success: true
+                data:
+                  weightageId: "e39365ed-6dd9-4403-9f30-02a938e61ffd"
+                message: "Weightage Updated Successfully."
+                error: ""
+  
+  /score/weightage:
+    get:
+      tags:
+        - Weightage
+      summary: Get Custom Weightage
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      ETH:
+                        type: object
+                        properties:
+                          UD_MODULE:
+                            type: number
+                          ENS_MODULE:
+                            type: number
+                          NFT_MODULE:
+                            type: number
+                          APPS_MODULE:
+                            type: number
+                          META_MODULE:
+                            type: number
+                          DEFI_TVL_MODULE:
+                            type: number
+                          DEFI_AAVE_MODULE:
+                            type: number
+                          DEFI_LIDO_MODULE:
+                            type: number
+                          DEFI_CURVE_MODULE:
+                            type: number
+                          DEFI_EULER_MODULE:
+                            type: number
+                          DEFI_YEARN_MODULE:
+                            type: number
+                          TX_HISTORY_MODULE:
+                            type: number
+                          DEFI_ENZYME_MODULE:
+                            type: number
+                          UNISWAP_DAO_MODULE:
+                            type: number
+                          DEFI_UNISWAP_MODULE:
+                            type: number
+                          DEFI_COMPOUND_MODULE:
+                            type: number
+                          DEFI_PROTOCOL_MODULE:
+                            type: number
+                          POOL_TOGETHER_MODULE:
+                            type: number
+                          DEFI_CATEGORY_WEIGHTAGE:
+                            type: number
+                          META_CATEGORY_WEIGHTAGE:
+                            type: number
+                          OVERALL_SCORE_WEIGHTAGE:
+                            type: number
+                          NFT_TRANSACTION_WEIGHTAGE:
+                            type: number
+                          CREDIBILITY_CATEGORY_WEIGHTAGE:
+                            type: number
+                          SOCIAL_IMPACT_CATEGORY_WEIGHTAGE:
+                            type: number
+                      POLYGON:
+                        type: object
+                        properties:
+                          UD_MODULE:
+                            type: number
+                          NFT_MODULE:
+                            type: number
+                          APPS_MODULE:
+                            type: number
+                          DEFI_TVL_MODULE:
+                            type: number
+                          TX_HISTORY_MODULE:
+                            type: number
+                          DEFI_PROTOCOL_MODULE:
+                            type: number
+                          POOL_TOGETHER_MODULE:
+                            type: number
+                          DEFI_CATEGORY_WEIGHTAGE:
+                            type: number
+                          META_CATEGORY_WEIGHTAGE:
+                            type: number
+                          OVERALL_SCORE_WEIGHTAGE:
+                            type: number
+                          CREDIBILITY_CATEGORY_WEIGHTAGE:
+                            type: number
+                      AVAX:
+                        type: object
+                        properties:
+                          NFT_MODULE:
+                            type: number
+                          APPS_MODULE:
+                            type: number
+                          DEFI_TVL_MODULE:
+                            type: number
+                          TX_HISTORY_MODULE:
+                            type: number
+                          DEFI_PROTOCOL_MODULE:
+                            type: number
+                          POOL_TOGETHER_MODULE:
+                            type: number
+                          DEFI_CATEGORY_WEIGHTAGE:
+                            type: number
+                          META_CATEGORY_WEIGHTAGE:
+                            type: number
+                          OVERALL_SCORE_WEIGHTAGE:
+                            type: number
+                          CREDIBILITY_CATEGORY_WEIGHTAGE:
+                            type: number
+                      BSC:
+                        type: object
+                        properties:
+                          NFT_MODULE:
+                            type: number
+                          APPS_MODULE:
+                            type: number
+                          DEFI_TVL_MODULE:
+                            type: number
+                          TX_HISTORY_MODULE:
+                            type: number
+                          DEFI_PROTOCOL_MODULE:
+                            type: number
+                          DEFI_CATEGORY_WEIGHTAGE:
+                            type: number
+                          META_CATEGORY_WEIGHTAGE:
+                            type: number
+                          OVERALL_SCORE_WEIGHTAGE:
+                            type: number
+                          CREDIBILITY_CATEGORY_WEIGHTAGE:
+                            type: number
+                      ARBITRUM:
+                        type: object
+                        properties:
+                          NFT_MODULE:
+                            type: number
+                          APPS_MODULE:
+                            type: number
+                          DEFI_TVL_MODULE:
+                            type: number
+                          DEFI_AAVE_MODULE:
+                            type: number
+                          DEFI_SILO_MODULE:
+                            type: number
+                          DEFI_YEARN_MODULE:
+                            type: number
+                          TX_HISTORY_MODULE:
+                            type: number
+                          DEFI_QI_DAO_MODULE:
+                            type: number
+                          DEFI_UNISWAP_MODULE:
+                            type: number
+                          DEFI_PROTOCOL_MODULE:
+                            type: number
+                          DEFI_ABRACADABRA_MODULE:
+                            type: number
+                          DEFI_CATEGORY_WEIGHTAGE:
+                            type: number
+                          META_CATEGORY_WEIGHTAGE:
+                            type: number
+                          OVERALL_SCORE_WEIGHTAGE:
+                            type: number
+                          CREDIBILITY_CATEGORY_WEIGHTAGE:
+                            type: number
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: true
+                data:
+                  ETH:
+                    UD_MODULE: 0.5
+                    ENS_MODULE: 0.5
+                    NFT_MODULE: 1
+                    APPS_MODULE: 0.5
+                    META_MODULE: 0.5
+                    TX_HISTORY_MODULE: 1
+                    DEFI_PROTOCOL_MODULE: 1
+                    DEFI_CATEGORY_WEIGHTAGE: 1
+                    META_CATEGORY_WEIGHTAGE: 0.2
+                    CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                    NFT_TRANSACTION_WEIGHTAGE: 0.25
+                    DEFI_AAVE_MODULE: 1
+                    DEFI_COMPOUND_MODULE: 0.3
+                    DEFI_CURVE_MODULE: 0.5
+                    DEFI_EULER_MODULE: 0.2
+                    DEFI_ENZYME_MODULE: 1
+                    DEFI_LIDO_MODULE: 0.3
+                    DEFI_TVL_MODULE: 0.5
+                    DEFI_UNISWAP_MODULE: 0.2
+                    DEFI_YEARN_MODULE: 0.2
+                    POOL_TOGETHER_MODULE: 0.1
+                    SOCIAL_IMPACT_CATEGORY_WEIGHTAGE: 0.5
+                    UNISWAP_DAO_MODULE: 1.0
+                    OVERALL_SCORE_WEIGHTAGE: 0.55
+                  POLYGON:
+                    UD_MODULE: 0.5
+                    NFT_MODULE: 1
+                    APPS_MODULE: 0.5
+                    DEFI_TVL_MODULE: 1
+                    TX_HISTORY_MODULE: 1
+                    DEFI_PROTOCOL_MODULE: 1
+                    DEFI_CATEGORY_WEIGHTAGE: 1
+                    META_CATEGORY_WEIGHTAGE: 0.2
+                    OVERALL_SCORE_WEIGHTAGE: 0.15
+                    CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                    POOL_TOGETHER_MODULE: 0.1
+                  AVAX:
+                    NFT_MODULE: 1
+                    APPS_MODULE: 0.5
+                    DEFI_TVL_MODULE: 1
+                    TX_HISTORY_MODULE: 1
+                    DEFI_PROTOCOL_MODULE: 1
+                    DEFI_CATEGORY_WEIGHTAGE: 1
+                    META_CATEGORY_WEIGHTAGE: 0.2
+                    OVERALL_SCORE_WEIGHTAGE: 0.05
+                    CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                    POOL_TOGETHER_MODULE: 0.1
+                  BSC:
+                    NFT_MODULE: 1
+                    APPS_MODULE: 0.5
+                    DEFI_TVL_MODULE: 1
+                    TX_HISTORY_MODULE: 1
+                    DEFI_PROTOCOL_MODULE: 1
+                    DEFI_CATEGORY_WEIGHTAGE: 1
+                    META_CATEGORY_WEIGHTAGE: 0.2
+                    OVERALL_SCORE_WEIGHTAGE: 0.25
+                    CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                  ARBITRUM:
+                    OVERALL_SCORE_WEIGHTAGE: 0.05
+                    NFT_MODULE: 1.0
+                    TX_HISTORY_MODULE: 1.0
+                    APPS_MODULE: 0.5
+                    DEFI_PROTOCOL_MODULE: 1.0
+                    DEFI_AAVE_MODULE: 1.0
+                    DEFI_ABRACADABRA_MODULE: 1.0
+                    DEFI_UNISWAP_MODULE: 1.0
+                    DEFI_YEARN_MODULE: 1.0
+                    DEFI_QI_DAO_MODULE: 1.0
+                    DEFI_SILO_MODULE: 1.0
+                    DEFI_TVL_MODULE: 1.0
+                    CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+ 
+
+                message: "Search Successfully Done!"
+                error: ""
+        
+        '400':
+          description: Error response - Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: false
+                data: object
+                message: "Weightage does not exists for given access key."
+                error: ""
+
+  
+  
+  /auth/client-profile:
+    get:
+      tags:
+        - Whitelist Cors
+      summary: Get Client API Key Profile Info.
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      apiRateLimit:
+                        type: integer
+                      whitelistCorsUrl:
+                        type: array
+                        items:
+                          type: string
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      User:
+                        type: object
+                        properties:
+                          emailId:
+                            type: string
+                          mobileNumber:
+                            type: string
+                          createdAt:
+                            type: string
+                            format: date-time
+                          message:
+                            type: string
+                          error:
+                            type: string
+                example:
+                  success: true
+                  data:
+                    apiRateLimit: 1000
+                    whitelistCorsUrl:
+                      - "http://localhost:4300"
+                      - "https://www.reputex.io"
+                    updatedAt: "2023-05-17T04:15:28.643Z"
+                    User:
+                      emailId: "contact@reputex.io"
+                      mobileNumber: "78xxxxxx23"
+                      createdAt: "2023-05-17T02:53:51.667Z"
+                  message: "OK"
+                  error: ""
+
+  /auth/whitelist-url:
+    post:
+      tags:
+        - Whitelist Cors
+      summary: Whitelist All Origin URLs for API Key.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                corsUrls:
+                  type: array
+                  items:
+                    type: string
+            example:
+              corsUrls:
+                - http://localhost:3204
+                - http://www.testurl.com
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example: 
+                success: true
+                data: object
+                message: "OTP has been sent successfully to your email id."
+                error: ""
+        '429':
+            description: Too Many Requests
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                    message:
+                      type: string
+                    error:
+                      type: string
+                example:
+                  success: false
+                  data: object
+                  message: "Max otp limit reached. Please try after one hour."
+                  error: ""
+  /auth/whitelist-url/verify:
+    post:
+      tags:
+        - Whitelist Cors
+      summary: Verify OTP to complete whitelisting of Origin URLs.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                otp: '281121'
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      type: string
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: true
+                data:
+                  - "http://localhost:3204"
+                  - "http://www.testurl.com"
+                message: "Successfully updated new cors urls."
+                error: ""
+        '410':
+          description: Error response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: false
+                data: object
+                message: "This Otp is already used."
+                error: ""
+        '400':
+          description: Error response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: false
+                data: object
+                message: "Invalid Otp."
+                error: ""
+        '429':
+          description: Error response - Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+                  error:
+                    type: string
+              example:
+                success: false
+                data: object
+                message: "Max attempt reached. Please try new otp."
+                error: ""

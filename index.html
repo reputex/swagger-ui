@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ReputeX SwaggerUI for partners." />
+    <title>ReputeX Partner API Playground</title>
+    <link rel="icon" type="image/*" href="./favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui.css"
+    />
+    <style></style>
+  </head>
+  <body>
+    <div class="header-class">
+      <img
+        alt="ReputeX Logo"
+        class="logo-display"
+        src="https://static.wixstatic.com/media/49a796_57dbace2ea2f42f9aa0775f6ab4ed05b~mv2.png"
+      />
+    </div>
+    <div id="swagger-ui"></div>
+    <div class="footer-class" >
+      <p>Contact us through <a href="mailto:contact@reputex.io">email</a> in case of any query.</p>
+    </div>
+    <script
+      src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-standalone-preset.js"
+      crossorigin
+    ></script>
+    <script>
+      window.onload = () => {
+        window.ui = SwaggerUIBundle({
+          // url: "https://raw.githubusercontent.com/aditya-nord/repx-swagger-ui/main/reputex-partner-api.yaml",
+          url: "./reputex-partner-api.yaml",
+          dom_id: "#swagger-ui",
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          layout: "StandaloneLayout",
+        });
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+html {
+  box-sizing: border-box;
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  background: #fafafa;
+}
+
+p, a {
+  font-family: sans-serif;
+  text-align: center;
+  color: white;
+}
+
+.topbar,
+.url {
+  display: none;
+}
+
+.header-class {
+  display: flex;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-class {
+  background-color: black;
+  margin: auto;
+  margin-top: 50px;
+  padding: 0.1rem;
+}
+
+.logo-display {
+  color: black;
+  height: 80px;
+  width: 160px;
+  margin-left: 8rem;
+}
