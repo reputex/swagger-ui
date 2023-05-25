@@ -418,19 +418,19 @@ paths:
                   OVERALL_SCORE_WEIGHTAGE: 0.25
                   CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
                 ARBITRUM:
-                OVERALL_SCORE_WEIGHTAGE: 0.05
-                NFT_MODULE: 1.0
-                TX_HISTORY_MODULE: 1.0
-                APPS_MODULE: 0.5
-                DEFI_PROTOCOL_MODULE: 1.0
-                DEFI_AAVE_MODULE: 1.0
-                DEFI_ABRACADABRA_MODULE: 1.0
-                DEFI_UNISWAP_MODULE: 1.0
-                DEFI_YEARN_MODULE: 1.0
-                DEFI_QI_DAO_MODULE: 1.0
-                DEFI_SILO_MODULE: 1.0
-                DEFI_TVL_MODULE: 1.0
-                CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                  OVERALL_SCORE_WEIGHTAGE: 0.05
+                  NFT_MODULE: 1.0
+                  TX_HISTORY_MODULE: 1.0
+                  APPS_MODULE: 0.5
+                  DEFI_PROTOCOL_MODULE: 1.0
+                  DEFI_AAVE_MODULE: 1.0
+                  DEFI_ABRACADABRA_MODULE: 1.0
+                  DEFI_UNISWAP_MODULE: 1.0
+                  DEFI_YEARN_MODULE: 1.0
+                  DEFI_QI_DAO_MODULE: 1.0
+                  DEFI_SILO_MODULE: 1.0
+                  DEFI_TVL_MODULE: 1.0
+                  CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
         
       responses:
         '200':
