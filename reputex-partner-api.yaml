@@ -4,7 +4,6 @@ info:
   version: 1.0.0
 servers:
   - url: https://api.reputex.io/v1
-  - url: https://dev.reputex.io/v1
 components:
   responses:
     UnauthorizedError:
