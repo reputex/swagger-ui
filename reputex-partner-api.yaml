@@ -357,6 +357,10 @@ paths:
                       type: number
                     CREDIBILITY_CATEGORY_WEIGHTAGE:
                       type: number
+                    DEFI_CATEGORY_WEIGHTAGE:
+                      type: number
+                    META_CATEGORY_WEIGHTAGE:
+                      type: number
               example:
                 ETH:
                   UD_MODULE: 0.5
@@ -430,6 +434,8 @@ paths:
                   DEFI_SILO_MODULE: 1.0
                   DEFI_TVL_MODULE: 1.0
                   CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                  DEFI_CATEGORY_WEIGHTAGE: 1.0
+                  META_CATEGORY_WEIGHTAGE: 0.1
         
       responses:
         '200':
@@ -632,6 +638,10 @@ paths:
                             type: number
                           CREDIBILITY_CATEGORY_WEIGHTAGE:
                             type: number
+                          DEFI_CATEGORY_WEIGHTAGE:
+                            type: number
+                          META_CATEGORY_WEIGHTAGE:
+                            type: number
                   message:
                     type: string
                   error:
@@ -711,6 +721,8 @@ paths:
                     DEFI_SILO_MODULE: 1.0
                     DEFI_TVL_MODULE: 1.0
                     CREDIBILITY_CATEGORY_WEIGHTAGE: 0.8
+                    DEFI_CATEGORY_WEIGHTAGE: 1.0
+                    META_CATEGORY_WEIGHTAGE: 0.1
  
 
                 message: "Search Successfully Done!"
