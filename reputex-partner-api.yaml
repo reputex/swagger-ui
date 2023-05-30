@@ -357,8 +357,6 @@ paths:
                       type: number
                     DEFI_CATEGORY_WEIGHTAGE:
                       type: number
-                    META_CATEGORY_WEIGHTAGE:
-                      type: number
               example:
                 ETH:
                   UD_MODULE: 0.5
@@ -635,10 +633,6 @@ paths:
                           OVERALL_SCORE_WEIGHTAGE:
                             type: number
                           CREDIBILITY_CATEGORY_WEIGHTAGE:
-                            type: number
-                          DEFI_CATEGORY_WEIGHTAGE:
-                            type: number
-                          META_CATEGORY_WEIGHTAGE:
                             type: number
                   message:
                     type: string
