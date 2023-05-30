@@ -349,11 +349,9 @@ paths:
                       type: number
                     DEFI_ABRACADABRA_MODULE:
                       type: number
-                    DEFI_CATEGORY_WEIGHTAGE:
+                    OVERALL_SCORE_WEIGHTAGE:
                       type: number
                     META_CATEGORY_WEIGHTAGE:
-                      type: number
-                    OVERALL_SCORE_WEIGHTAGE:
                       type: number
                     CREDIBILITY_CATEGORY_WEIGHTAGE:
                       type: number
